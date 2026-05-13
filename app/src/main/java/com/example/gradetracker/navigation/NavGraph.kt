@@ -9,7 +9,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.gradetracker.data.local.preferences.OnboardingPreferences
 import com.example.gradetracker.presentation.screen.DashboardScreen
+import com.example.gradetracker.presentation.screen.OnboardingScreen
 import com.example.gradetracker.presentation.screen.SubjectDetailScreen
 import com.example.gradetracker.presentation.screen.SubjectListScreen
 import com.example.gradetracker.presentation.viewmodel.DashboardViewModel
@@ -19,12 +21,31 @@ import com.example.gradetracker.presentation.viewmodel.SubjectListViewModel
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    val application = LocalContext.current.applicationContext as Application
+    val context = LocalContext.current
+    val application = context.applicationContext as Application
+    val onboardingPrefs = OnboardingPreferences(context)
+    
+    val startDestination = if (onboardingPrefs.isOnboardingCompleted) {
+        Screen.SubjectList.route
+    } else {
+        Screen.Onboarding.route
+    }
     
     NavHost(
         navController = navController,
-        startDestination = Screen.SubjectList.route
+        startDestination = startDestination
     ) {
+        composable(Screen.Onboarding.route) {
+            OnboardingScreen(
+                onFinish = {
+                    onboardingPrefs.isOnboardingCompleted = true
+                    navController.navigate(Screen.SubjectList.route) {
+                        popUpTo(Screen.Onboarding.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+        
         composable(Screen.Dashboard.route) {
             val viewModel: DashboardViewModel = viewModel()
             DashboardScreen(viewModel = viewModel)

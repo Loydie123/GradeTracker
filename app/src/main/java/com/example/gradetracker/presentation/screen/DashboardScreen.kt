@@ -28,10 +28,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.gradetracker.presentation.components.StatCard
 import com.example.gradetracker.presentation.viewmodel.DashboardViewModel
+import com.example.gradetracker.ui.theme.PrimaryBlue
+import com.example.gradetracker.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,12 +42,13 @@ fun DashboardScreen(viewModel: DashboardViewModel) {
     val uiState by viewModel.uiState.collectAsState()
     
     Scaffold(
+        containerColor = Color(0xFFFAFAFA),
         topBar = {
             TopAppBar(
-                title = { Text("Dashboard") },
+                title = { Text("Dashboard", color = White) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor = PrimaryBlue,
+                    titleContentColor = White
                 )
             )
         }

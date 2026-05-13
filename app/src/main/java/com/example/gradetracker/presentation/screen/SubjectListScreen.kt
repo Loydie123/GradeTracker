@@ -28,10 +28,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.gradetracker.presentation.components.AddSubjectDialog
 import com.example.gradetracker.presentation.components.SubjectCard
 import com.example.gradetracker.presentation.viewmodel.SubjectListViewModel
+import com.example.gradetracker.ui.theme.PrimaryBlue
+import com.example.gradetracker.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,19 +46,21 @@ fun SubjectListScreen(
     var showAddDialog by remember { mutableStateOf(false) }
     
     Scaffold(
+        containerColor = Color(0xFFFAFAFA),
         topBar = {
             TopAppBar(
-                title = { Text("My Subjects") },
+                title = { Text("My Subjects", color = White) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor = PrimaryBlue,
+                    titleContentColor = White
                 )
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showAddDialog = true },
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = PrimaryBlue,
+                contentColor = White
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Subject")
             }

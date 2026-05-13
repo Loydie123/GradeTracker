@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import com.example.gradetracker.ui.theme.PrimaryBlue
+import com.example.gradetracker.ui.theme.White
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -56,7 +59,9 @@ fun MainScreen() {
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (showBottomBar) {
-                NavigationBar {
+                NavigationBar(
+                    containerColor = White
+                ) {
                     bottomNavItems.forEach { item ->
                         NavigationBarItem(
                             icon = { Icon(item.icon, contentDescription = item.title) },
@@ -70,7 +75,12 @@ fun MainScreen() {
                                     launchSingleTop = true
                                     restoreState = true
                                 }
-                            }
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = PrimaryBlue,
+                                selectedTextColor = PrimaryBlue,
+                                indicatorColor = PrimaryBlue.copy(alpha = 0.1f)
+                            )
                         )
                     }
                 }
