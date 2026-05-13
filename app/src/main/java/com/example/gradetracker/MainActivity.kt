@@ -7,17 +7,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import com.example.gradetracker.ui.theme.PrimaryBlue
-import com.example.gradetracker.ui.theme.White
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -26,11 +31,13 @@ import com.example.gradetracker.navigation.BottomNavItem
 import com.example.gradetracker.navigation.NavGraph
 import com.example.gradetracker.navigation.Screen
 import com.example.gradetracker.ui.theme.GradeTrackerTheme
+import com.example.gradetracker.ui.theme.PrimaryBlue
+import com.example.gradetracker.ui.theme.White
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             GradeTrackerTheme {
                 MainScreen()
@@ -57,10 +64,14 @@ fun MainScreen() {
     
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        containerColor = Color(0xFFF5F7FA),
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar(
-                    containerColor = White
+                    containerColor = White,
+                    modifier = Modifier
+                        .shadow(8.dp)
+                        .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 ) {
                     bottomNavItems.forEach { item ->
                         NavigationBarItem(
@@ -79,6 +90,8 @@ fun MainScreen() {
                             colors = NavigationBarItemDefaults.colors(
                                 selectedIconColor = PrimaryBlue,
                                 selectedTextColor = PrimaryBlue,
+                                unselectedIconColor = Color.Gray,
+                                unselectedTextColor = Color.Gray,
                                 indicatorColor = PrimaryBlue.copy(alpha = 0.1f)
                             )
                         )
@@ -87,7 +100,7 @@ fun MainScreen() {
             }
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())) {
             NavGraph(
                 navController = navController
             )

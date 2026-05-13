@@ -47,6 +47,9 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 # Material Icons Extended
 material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
+# Google Fonts
+ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.6.0" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
